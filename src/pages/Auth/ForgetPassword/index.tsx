@@ -1,23 +1,28 @@
 import Table from "@/components/Table";
-import { useHttp } from "@/hooks/use-http";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useColumns from "./useColumns";
 
 type dummyData = {
 	email: string;
-	phone_number: string;
+	password: string;
 };
 
 export default function ForgetPasswordPage() {
 	const [data, setData] = useState<dummyData[]>([]);
-	const { isLoading, sendRequest } = useHttp();
-	const columns = useColumns();
 
-	useEffect(() => {}, []);
+	const columns = useColumns();
 
 	return (
 		<div className="">
-			<Table data={data} columns={columns} isLoading={isLoading} noPagination />
+			<Table
+				data={data}
+				columns={columns}
+				endpoint="get/users"
+				expandedContent={<div className="h-40">Expanded Content</div>}
+				fetchData={(response: { data: dummyData[] }) => {
+					setData(response.data);
+				}}
+			/>
 		</div>
 	);
 }

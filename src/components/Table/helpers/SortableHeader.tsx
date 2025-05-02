@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Column } from "@tanstack/react-table";
 import { ArrowDown01, ArrowDownAZ, ArrowUp01, ArrowUpAZ } from "lucide-react";
-import { useTranslation } from "react-i18next";
 
 interface SortableHeaderProps<TData> {
 	column: Column<TData, unknown>;
@@ -14,8 +13,6 @@ export default function SortableHeader<TData>({
 	label,
 	isNumber = false,
 }: SortableHeaderProps<TData>) {
-	const { t } = useTranslation();
-
 	let icon = undefined;
 
 	if (isNumber) {
@@ -30,7 +27,7 @@ export default function SortableHeader<TData>({
 			onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 			className="flex  p-0 m-0 gap-1"
 		>
-			{t(label)}
+			{label}
 
 			{icon}
 		</Button>

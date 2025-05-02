@@ -4,6 +4,10 @@ import StorageManager from "@/models/StorageManager";
 
 type RequestHeaders = Record<string, string>;
 
+const ENDPOINT = import.meta.env.REACT_APP_ENDPOINT;
+
+console.log("ENDPOINT", ENDPOINT);
+
 type RequestConfigType<T> = {
 	endpoint: string;
 	method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -50,7 +54,7 @@ export function useHttp(): UseHttpReturnType {
 				setError(null);
 
 				const axiosConfig: AxiosRequestConfig = {
-					url: `${requestConfig.endpoint}`,
+					url: `${ENDPOINT}${requestConfig.endpoint}`,
 					method: requestConfig.method || "GET",
 					headers: {
 						"Content-Type": "application/json",

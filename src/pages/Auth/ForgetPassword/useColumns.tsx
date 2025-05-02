@@ -1,12 +1,13 @@
 import { ColumnDef } from "@tanstack/react-table";
-
+import { ExpandableCol } from "@/components/Table/helpers";
 type Column = () => ColumnDef<{
 	email: string;
-	phone_number: string;
+	password: string;
 }>[];
 
 const useColumns: Column = () => {
 	return [
+		ExpandableCol(),
 		{
 			accessorKey: "email",
 			header: "Email",
@@ -16,7 +17,7 @@ const useColumns: Column = () => {
 			},
 		},
 		{
-			accessorKey: "phone_number",
+			accessorKey: "password",
 			header: "Phone Number",
 			cell: ({ getValue }) => {
 				const value = getValue() as string;
