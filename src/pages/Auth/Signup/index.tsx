@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDocumentTitle } from "@/hooks/use-document-title";
 import { Link } from "react-router-dom";
-import { SignUpRoute } from "../index.route";
+import { SignUpRoute, LoginRoute } from "../index.route";
 
 export default function SignupPage() {
 	const form = Form.useForm({
@@ -16,7 +16,7 @@ export default function SignupPage() {
 		console.log("Form submitted with values:", values);
 	}
 
-	useDocumentTitle(SignUpRoute.getRouteName() || "Login");
+	useDocumentTitle(SignUpRoute.getRouteName() || "Sign Up");
 
 	return (
 		<>
@@ -28,7 +28,6 @@ export default function SignupPage() {
 					<div className="flex flex-col gap-4">
 						<Form.Input name="email" label="Email" type="email" required />
 						<Form.Input name="password" label="Password" type="password" required />
-						<Form.Select name="role" label="Role" required options={[]} />
 
 						<Button type="submit" className="w-full">
 							Sign Up
@@ -40,7 +39,7 @@ export default function SignupPage() {
 				<p className="text-sm text-center">
 					Already have an account?
 					<Button variant={"link"} className="pl-2">
-						<Link to={"/"}>Login</Link>
+						<Link to={LoginRoute.getExactPath()}>Login</Link>
 					</Button>
 				</p>
 			</CardFooter>

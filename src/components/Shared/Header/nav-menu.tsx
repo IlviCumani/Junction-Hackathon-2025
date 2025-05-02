@@ -23,7 +23,7 @@ export const NavMenu = ({
 	const { pathname } = useLocation();
 
 	return (
-		<NavigationMenu {...props}>
+		<NavigationMenu {...props} className={className}>
 			<NavigationMenuList className="gap-6 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start">
 				{navLinks.map((link) => {
 					const isActive = pathname === link.href;
