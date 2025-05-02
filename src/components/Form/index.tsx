@@ -13,6 +13,7 @@ import FormSelect from "./Items/Select";
 import MultiSelect from "./Items/MultiSelect";
 import FormDatePicker from "./Items/DatePicker";
 import FormFileUpload from "./Items/FileUpload";
+import FormSlider from "./Items/Slider";
 
 type FormPropTypes<T extends FieldValues, K> = {
 	onSubmit: (data: K) => void;
@@ -55,3 +56,4 @@ Form.DatePicker = FormDatePicker;
 Form.FileUpload = FormFileUpload;
 Form.MultiSelect = MultiSelect;
 Form.Phone = FormPhoneInput;
+Form.Slider = FormSlider;

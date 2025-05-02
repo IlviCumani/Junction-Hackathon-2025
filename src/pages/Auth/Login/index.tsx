@@ -29,6 +29,7 @@ export default function LoginPage() {
 					<div className="flex flex-col gap-4">
 						<Form.Input name="email" label="Email" type="email" required />
 						<Form.Input name="password" label="Password" type="password" required />
+						<Form.Slider name="slider" label="Slider" />
 
 						<Button type="submit" className="w-full">
 							Login
