@@ -9,13 +9,13 @@ const AuthPages = {
 };
 
 const AuthRoot = new ProjectRoutes({
-	routePath: "",
+	routePath: "auth",
 	routeElement: <AuthPages.Layout />,
 });
 
 const LoginRoute = new ProjectRoutes({
 	routeName: "Login",
-	routePath: "",
+	routePath: "login",
 	routeElement: <AuthPages.Login />,
 });
 

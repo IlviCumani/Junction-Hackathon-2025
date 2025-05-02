@@ -28,6 +28,7 @@ export default function SignupPage() {
 					<div className="flex flex-col gap-4">
 						<Form.Input name="email" label="Email" type="email" required />
 						<Form.Input name="password" label="Password" type="password" required />
+						<Form.Select name="role" label="Role" required options={[]} />
 
 						<Button type="submit" className="w-full">
 							Sign Up
