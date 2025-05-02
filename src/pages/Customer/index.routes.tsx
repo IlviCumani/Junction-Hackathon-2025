@@ -24,6 +24,8 @@ const MenuRoute = new ProjectRoutes({
 	routeElement: <CustomerPages.Menu />,
 });
 
+
+
 function appendSubRoutes(): void {
 	CustomerRoot.addChildrenRoute(HomeRoute);
 	CustomerRoot.addChildrenRoute(MenuRoute);
