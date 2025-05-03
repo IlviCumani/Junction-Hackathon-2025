@@ -58,7 +58,7 @@ export function useHttp(): UseHttpReturnType {
 					method: requestConfig.method || "GET",
 					headers: {
 						"Content-Type": "application/json",
-						...(authToken ? { Authorization: `${authToken}` } : {}),
+						...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
 						...requestConfig.headers,
 					},
 					data: requestConfig.body,

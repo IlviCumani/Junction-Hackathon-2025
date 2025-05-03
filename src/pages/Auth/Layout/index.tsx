@@ -12,9 +12,9 @@ const navLinks = CustomerRoot.getSubRoutes().map((subRoute) => {
 export default function Layout() {
 	return (
 		<div className="flex flex-col w-full  min-h-screen ">
-			<div className="flex-1 w-full h-full">
+			<div className="flex-1 w-full h-full flex flex-col">
 				<Header navLinks={navLinks} />
-				<div className="flex flex-1 justify-center mt-20  ">
+				<div className="flex justify-center mt-20  items-center">
 					<Card className="w-full max-w-md">
 						<Outlet />
 					</Card>

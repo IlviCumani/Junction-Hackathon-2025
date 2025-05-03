@@ -24,8 +24,6 @@ const CartContext = createContext<CardProviderState | null>(null);
 export function CartProvider({ children }: { children: React.ReactNode }) {
 	const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-	console.log("cartItems", cartItems);
-
 	useEffect(() => {
 		const storedCartItems = StorageManager.getItem(CART_STORAGE_KEY);
 		console.log("storedCartItems", storedCartItems);
@@ -38,16 +36,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 		setCartItems((prevItems) => {
 			const existingItem = prevItems.find((i) => i.id === item.id);
 			if (existingItem) {
-				return prevItems.map((i) =>
+				const updatedItems = prevItems.map((i) =>
 					i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i,
 				);
+				StorageManager.setItem(CART_STORAGE_KEY, updatedItems);
+				return updatedItems;
 			}
 
-			StorageManager.setItem(CART_STORAGE_KEY, [
-				...prevItems,
-				{ ...item, quantity: item.quantity },
-			]);
-			return [...prevItems, item];
+			const newItems = [...prevItems, item];
+			StorageManager.setItem(CART_STORAGE_KEY, newItems);
+			return newItems;
 		});
 	};
 
@@ -65,13 +63,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 				item.id === id ? { ...item, quantity: Math.max(0, quantity) } : item,
 			);
 
-			if (quantity === 0) {
-				StorageManager.setItem(
-					CART_STORAGE_KEY,
-					updatedItems.filter((item) => item.id !== id),
-				);
-				return updatedItems.filter((item) => item.id !== id);
-			}
+			// if (quantity === 0) {
+			// 	StorageManager.setItem(
+			// 		CART_STORAGE_KEY,
+			// 		updatedItems.filter((item) => item.id !== id),
+			// 	);
+			// 	return updatedItems.filter((item) => item.id !== id);
+			// }
 
 			StorageManager.setItem(CART_STORAGE_KEY, updatedItems);
 			return updatedItems;
