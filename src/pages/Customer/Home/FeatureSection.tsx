@@ -1,6 +1,6 @@
 import { ShoppingCart, Gift, Calendar, QrCode } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const features = [
 	{
@@ -34,6 +34,7 @@ const features = [
 ];
 
 const FeatureSection = () => {
+	const navigate = useNavigate();
 	return (
 		<section className="py-12">
 			<div className="container mx-auto px-4">
@@ -43,7 +44,15 @@ const FeatureSection = () => {
 
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 					{features.map((feature, index) => (
-						<Link to={feature.link} key={index} className="group">
+						<div
+							key={index}
+							className="group"
+							onClick={() => {
+								if (index !== 3) {
+									navigate(feature.link);
+								}
+							}}
+						>
 							<Card className="h-full transition-all duration-300 hover:shadow-lg hover:border-cafe-accent/30 cafe-card transform hover:scale-105">
 								<CardHeader className="pb-2">
 									<div className="w-12 h-12 rounded-full bg-cafe-cream flex items-center justify-center mb-3 group-hover:bg-cafe-accent/20 transition-colors">
@@ -59,7 +68,7 @@ const FeatureSection = () => {
 									</CardDescription>
 								</CardContent>
 							</Card>
-						</Link>
+						</div>
 					))}
 				</div>
 			</div>

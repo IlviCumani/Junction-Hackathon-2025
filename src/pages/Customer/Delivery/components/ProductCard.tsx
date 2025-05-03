@@ -10,6 +10,7 @@ type ProductCardProps = {
 	description?: string;
 	price?: number;
 	stock?: number;
+	onBtnClick?: any;
 };
 
 export default function ProductCard({
@@ -18,6 +19,7 @@ export default function ProductCard({
 	description = "Product Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 	price = 10.0,
 	id,
+	onBtnClick,
 }: // stock = 10,
 ProductCardProps) {
 	const { addToCart } = useCartContext();
@@ -42,15 +44,19 @@ ProductCardProps) {
 				</div>
 				<Button
 					className="/blocks"
-					onClick={() => {
-						addToCart({
-							id,
-							name: title,
-							price,
-							image,
-							quantity: 1,
-						});
-					}}
+					onClick={
+						onBtnClick
+							? onBtnClick
+							: () => {
+									addToCart({
+										id,
+										name: title,
+										price,
+										image,
+										quantity: 1,
+									});
+							  }
+					}
 				>
 					<ShoppingCart />
 					Add to cart

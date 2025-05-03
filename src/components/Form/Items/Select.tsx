@@ -84,13 +84,13 @@ function FormSelect({
 
 					<SelectContent className="max-h-56 h-fit">
 						{filteredOptions.length > 10 && <SelectScrollUpButton />}
-						<Input
+						{/* <Input
 							value={inputValue}
 							onChange={handleInputChange}
 							placeholder={"Search"}
 							wrapperClassname="my-2"
 							after={<Search className="text-muted-foreground mr-2" size={16} />}
-						/>
+						/> */}
 
 						<SelectGroup>
 							{filteredOptions.map((option, index) => (

@@ -6,7 +6,7 @@ import { CustomerRoot } from "@/pages/Customer/index.routes";
 import { Button } from "@/components/ui/button";
 import { Moon } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
-
+import Logo from "/Logo.png";
 const navLinks = CustomerRoot.getSubRoutes().map((subRoute) => {
 	return {
 		title: subRoute.getRouteName() || "Home",
@@ -24,6 +24,7 @@ export default function Footer() {
 				<div className="max-w-(--breakpoint-xl) mx-auto">
 					<div className="py-12 flex flex-col sm:flex-row items-start justify-between gap-x-8 gap-y-10 px-6 xl:px-0">
 						<div>
+							<img src={Logo} alt="Logo" className="h-10 w-auto cursor-pointer " />
 							<ul className="mt-6 flex items-center gap-4 flex-wrap">
 								{navLinks.map(({ title, href }) => (
 									<li key={title}>
