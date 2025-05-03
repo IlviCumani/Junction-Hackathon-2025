@@ -6,7 +6,7 @@ const LoyaltyBanner = () => {
 	const loyaltyPoints = 120; // example static number for testing
 
 	return (
-		<section className="bg-primary/30 text-white py-16 relative rounded-md">
+		<section className="bg-primary/30 py-16 relative rounded-md">
 			<div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-background to-transparent"></div>
 			<div className="container mx-auto px-4 text-center">
 				<h2 className="text-2xl md:text-3xl font-bold mb-2">
