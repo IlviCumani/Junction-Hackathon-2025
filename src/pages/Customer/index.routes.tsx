@@ -6,6 +6,8 @@ const CustomerPages = {
 	Home: lazy(() => import("./Home")),
 	Menu: lazy(() => import("./Menu")),
 	Delivery: lazy(() => import("./Delivery")),
+	Gift: lazy(() => import("./Gift")),
+	Loyalty: lazy(() => import("./Loyalty")),
 };
 
 const CustomerRoot = new ProjectRoutes({
@@ -25,6 +27,18 @@ const MenuRoute = new ProjectRoutes({
 	routeElement: <CustomerPages.Menu />,
 });
 
+const GiftRoute = new ProjectRoutes({
+	routeName: "Gift",
+	routePath: "gift",
+	routeElement: <CustomerPages.Gift />,
+});
+
+const LoyaltyRoute = new ProjectRoutes({
+	routeName: "Loyalty",
+	routePath: "loyalty",
+	routeElement: <CustomerPages.Loyalty />,
+});
+
 const DeliveryRoute = new ProjectRoutes({
 	routeName: "Delivery",
 	routePath: "delivery",
@@ -42,6 +56,8 @@ const ProfileRoute = new ProjectRoutes({
 function appendSubRoutes(): void {
 	CustomerRoot.addChildrenRoute(HomeRoute);
 	CustomerRoot.addChildrenRoute(MenuRoute);
+	CustomerRoot.addChildrenRoute(GiftRoute);
+	CustomerRoot.addChildrenRoute(LoyaltyRoute);
 	CustomerRoot.addChildrenRoute(DeliveryRoute);
 	CustomerRoot.addChildrenRoute(ProfileRoute);
 }
