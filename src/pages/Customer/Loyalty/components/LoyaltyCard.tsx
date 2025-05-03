@@ -30,7 +30,10 @@ export default function LoyaltyCard({}) {
 					<span>Your Points</span>
 					<div className="flex items-center gap-2">
 						<Progress value={50} className="h-2" />
-						<span>{`${50}/300`}</span>
+						<span className="text-muted-foreground">
+							<span className="text-2xl text-foreground">50</span>
+							/300
+						</span>
 					</div>
 				</div>
 			</CardContent>
