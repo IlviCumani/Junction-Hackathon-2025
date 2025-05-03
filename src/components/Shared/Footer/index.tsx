@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 
 import { SiMeta, SiTiktok, SiX, SiInstagram } from "@icons-pack/react-simple-icons";
 import { CustomerRoot } from "@/pages/Customer/index.routes";
+import { Button } from "@/components/ui/button";
+import { Moon } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
 
 const navLinks = CustomerRoot.getSubRoutes().map((subRoute) => {
 	return {
@@ -12,6 +15,8 @@ const navLinks = CustomerRoot.getSubRoutes().map((subRoute) => {
 });
 
 export default function Footer() {
+	const { setTheme, theme } = useTheme();
+
 	return (
 		<div className="flex flex-col border-t bg-secondary">
 			<div className="grow" />
@@ -32,6 +37,19 @@ export default function Footer() {
 								))}
 							</ul>
 						</div>
+						<Button
+							size={"icon"}
+							variant={"outline"}
+							onClick={() => {
+								setTheme(theme === "dark" ? "light" : "dark");
+							}}
+						>
+							{theme === "dark" ? (
+								<Moon className="h-5 w-5 text-muted-foreground" />
+							) : (
+								<Moon className="h-5 w-5 text-muted-foreground" />
+							)}
+						</Button>
 					</div>
 					<Separator className="bg-muted-foreground" />
 					<div className="py-8 flex flex-col-reverse sm:flex-row items-center justify-between gap-x-2 gap-y-5 px-6 xl:px-0">

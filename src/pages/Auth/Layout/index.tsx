@@ -31,7 +31,7 @@ export default function Layout() {
 		<div className="flex flex-col w-full  min-h-screen ">
 			<div className="flex-1 w-full h-full flex flex-col">
 				<Header navLinks={filteredNavLinks} />
-				<div className="flex justify-center my-auto  items-center">
+				<div className="flex justify-center my-auto items-center">
 					<Card className="w-full max-w-md">
 						<Outlet />
 					</Card>

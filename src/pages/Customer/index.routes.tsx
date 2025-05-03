@@ -8,6 +8,7 @@ const CustomerPages = {
 	Delivery: lazy(() => import("./Delivery")),
 	Gift: lazy(() => import("./Gift")),
 	Loyalty: lazy(() => import("./Loyalty")),
+	Profile: lazy(() => import("./Profile")),
 };
 
 const CustomerRoot = new ProjectRoutes({
@@ -50,7 +51,7 @@ const ProfileRoute = new ProjectRoutes({
 	routeName: "Profile",
 	routePath: "profile",
 	needsAuthentication: true,
-	routeElement: <CustomerPages.Delivery />,
+	routeElement: <CustomerPages.Profile />,
 });
 
 function appendSubRoutes(): void {
