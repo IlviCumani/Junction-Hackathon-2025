@@ -7,6 +7,8 @@ import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { useCartContext } from "@/context/CartContext";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { useAuthContext } from "@/context/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type HeaderProps = {
 	navLinks?: { label: string; href: string }[];
@@ -15,7 +17,7 @@ type HeaderProps = {
 const Navbar = ({ navLinks = [] }: HeaderProps) => {
 	const navigate = useNavigate();
 	const { cartItems, updateQuantity } = useCartContext();
-
+	const { isAuthenticated } = useAuthContext();
 	const cartItemsCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
 	return (
@@ -108,14 +110,21 @@ const Navbar = ({ navLinks = [] }: HeaderProps) => {
 						</PopoverContent>
 					</Popover>
 
-					<Button
-						variant="outline"
-						onClick={() => {
-							navigate(LoginRoute.getExactPath());
-						}}
-					>
-						Login
-					</Button>
+					{!isAuthenticated ? (
+						<Button
+							variant="outline"
+							onClick={() => {
+								navigate(LoginRoute.getExactPath());
+							}}
+						>
+							Login
+						</Button>
+					) : (
+						<Avatar className="size-8">
+							<AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+							<AvatarFallback>CN</AvatarFallback>
+						</Avatar>
+					)}
 
 					<div className="md:hidden">
 						<NavigationSheet navLinks={navLinks} />

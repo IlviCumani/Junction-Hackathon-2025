@@ -1,7 +1,9 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import Header from "@/components/Shared/Header";
 import { CustomerRoot } from "@/pages/Customer/index.routes";
+import { useEffect } from "react";
+import { useAuthContext } from "@/context/AuthContext";
 const navLinks = CustomerRoot.getSubRoutes().map((subRoute) => {
 	return {
 		label: subRoute.getRouteName() || "Home",
@@ -10,6 +12,12 @@ const navLinks = CustomerRoot.getSubRoutes().map((subRoute) => {
 });
 
 export default function Layout() {
+	const navigate = useNavigate();
+	const { isAuthenticated } = useAuthContext();
+	useEffect(() => {
+		if (isAuthenticated) navigate("/");
+	}, []);
+
 	return (
 		<div className="flex flex-col w-full  min-h-screen ">
 			<div className="flex-1 w-full h-full flex flex-col">
