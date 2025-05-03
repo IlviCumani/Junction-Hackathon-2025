@@ -24,7 +24,6 @@ const AuthContext = createContext<AuthProviderState | null>(null);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [user, setUser] = useState<User | null>(null);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const { sendRequest } = useHttp();
 
 	useEffect(() => {
 		const token = StorageManager.getItem("authToken");

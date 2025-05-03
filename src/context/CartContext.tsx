@@ -26,7 +26,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
 	useEffect(() => {
 		const storedCartItems = StorageManager.getItem(CART_STORAGE_KEY);
-		console.log("storedCartItems", storedCartItems);
 		if (storedCartItems) {
 			setCartItems(storedCartItems);
 		}

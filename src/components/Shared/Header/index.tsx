@@ -13,15 +13,14 @@ import { ProfileRoute } from "@/pages/Customer/index.routes";
 
 import {
 	Dialog,
+	DialogClose,
 	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import Form from "@/components/Form";
 import { useHttp } from "@/hooks/use-http";
+import { useRef } from "react";
 
 type HeaderProps = {
 	navLinks?: { label: string; href: string }[];
@@ -32,6 +31,7 @@ const Navbar = ({ navLinks = [] }: HeaderProps) => {
 	const { cartItems, updateQuantity, clearCart } = useCartContext();
 	const { isLoading, sendRequest } = useHttp();
 	const { isAuthenticated, user } = useAuthContext();
+	const closeRef = useRef<HTMLButtonElement>(null);
 	const cartItemsCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 	const form = Form.useForm({
 		defaultValues: {
@@ -40,7 +40,28 @@ const Navbar = ({ navLinks = [] }: HeaderProps) => {
 	});
 
 	const handleSubmit = (data: any) => {
-		console.log(data);
+		const orderItems = cartItems.map((item) => ({
+			product: item.id,
+			ammount: item.quantity,
+		}));
+
+		const address = {
+			city: data.city,
+			country: data.country,
+			street: data.street,
+			building: data.building,
+			zip_code: data["zip code"],
+		};
+
+		const orderData = {
+			address: address,
+			orders: orderItems,
+		};
+
+		sendRequest(useHttp.POST("create/supply/order/", orderData), () => {
+			clearCart();
+			closeRef.current?.click();
+		});
 	};
 
 	return (
@@ -144,10 +165,30 @@ const Navbar = ({ navLinks = [] }: HeaderProps) => {
 												<div className="mt-4">
 													<Form form={form} onSubmit={handleSubmit}>
 														<Form.Input
-															name="address"
-															label="Address"
+															name="country"
+															label="Country"
 															required
 														></Form.Input>
+														<Form.Input
+															name="city"
+															label="City"
+															required
+														></Form.Input>
+														<Form.Input
+															name="street"
+															label="Street"
+															required
+														></Form.Input>
+														<Form.Input
+															name="building"
+															label="Building"
+														></Form.Input>
+														<Form.Number
+															name="zip code"
+															label="ZIP"
+															type={["integer"]}
+															required
+														></Form.Number>
 
 														<div className="flex justify-end mt-4">
 															<Button loading={isLoading}>
@@ -156,6 +197,10 @@ const Navbar = ({ navLinks = [] }: HeaderProps) => {
 														</div>
 													</Form>
 												</div>
+												<DialogClose
+													className="hidden"
+													ref={closeRef}
+												></DialogClose>
 											</DialogContent>
 										</>
 									)}
