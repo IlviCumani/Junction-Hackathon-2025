@@ -5,6 +5,7 @@ interface ProjectRoutesProps {
 	routePath: string;
 	routeElement: ReactNode;
 	icon?: ReactNode;
+	needsAuthentication?: boolean;
 }
 
 export class ProjectRoutes {
@@ -15,14 +16,22 @@ export class ProjectRoutes {
 	private icon?: ReactNode;
 	private subRoutes: ProjectRoutes[] = [];
 	private isIndex: boolean;
+	private needsAuthentication: boolean;
 
-	constructor({ routeName, routePath, routeElement, icon }: ProjectRoutesProps) {
+	constructor({
+		routeName,
+		routePath,
+		routeElement,
+		icon,
+		needsAuthentication,
+	}: ProjectRoutesProps) {
 		this.routeName = routeName;
 		this.routePath = routePath;
 		this.routeElement = routeElement;
 		this.exactPath = routePath;
 		this.icon = icon;
 		this.isIndex = false;
+		this.needsAuthentication = needsAuthentication ? true : false;
 	}
 
 	getRouteName(): string | undefined {
@@ -43,6 +52,10 @@ export class ProjectRoutes {
 
 	getIcon(): ReactNode {
 		return this.icon;
+	}
+
+	getNeedsAuthentication(): boolean {
+		return this.needsAuthentication;
 	}
 
 	getSubRoutes(): ProjectRoutes[] {
