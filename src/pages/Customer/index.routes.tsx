@@ -5,6 +5,7 @@ const CustomerPages = {
 	Layout: lazy(() => import("./Layout")),
 	Home: lazy(() => import("./Home")),
 	Menu: lazy(() => import("./Menu")),
+	Delivery: lazy(() => import("./Delivery")),
 };
 
 const CustomerRoot = new ProjectRoutes({
@@ -24,11 +25,16 @@ const MenuRoute = new ProjectRoutes({
 	routeElement: <CustomerPages.Menu />,
 });
 
-
+const DeliveryRoute = new ProjectRoutes({
+	routeName: "Delivery",
+	routePath: "delivery",
+	routeElement: <CustomerPages.Delivery />,
+});
 
 function appendSubRoutes(): void {
 	CustomerRoot.addChildrenRoute(HomeRoute);
 	CustomerRoot.addChildrenRoute(MenuRoute);
+	CustomerRoot.addChildrenRoute(DeliveryRoute);
 }
 
 export { CustomerRoot, HomeRoute, appendSubRoutes };

@@ -14,7 +14,7 @@ export default function Layout() {
 	return (
 		<div className="min-h-screen flex flex-col">
 			<Navbar navLinks={navLinks} />
-			<div className="flex-1">
+			<div className="flex-1 m-4">
 				<Outlet />
 			</div>
 			<Footer />
