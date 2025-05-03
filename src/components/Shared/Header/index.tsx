@@ -22,6 +22,8 @@ import Form from "@/components/Form";
 import { useHttp } from "@/hooks/use-http";
 import { useRef } from "react";
 
+import Logo from "/Logo.png";
+
 type HeaderProps = {
 	navLinks?: { label: string; href: string }[];
 };
@@ -68,7 +70,13 @@ const Navbar = ({ navLinks = [] }: HeaderProps) => {
 		<nav className="h-16 bg-background border-b ">
 			<Dialog>
 				<div className="h-full flex items-center justify-between max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-					<h1>TEMP LOGO</h1>
+					{/* <h1>TEMP LOGO</h1> */}
+					<img
+						src={Logo}
+						alt="Logo"
+						className="h-10 w-auto cursor-pointer "
+						onClick={() => navigate("/")}
+					/>
 
 					<NavMenu className="hidden md:block" navLinks={navLinks} />
 

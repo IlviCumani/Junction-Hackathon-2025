@@ -4,61 +4,6 @@ import { useEffect, useState } from "react";
 import { useHttp } from "@/hooks/use-http";
 import { Loader } from "@/components/Shared/Loader";
 
-const mockData = [
-	{
-		category_id: 1,
-		category_name: "Coffee 1",
-		items: [
-			{
-				id: 1,
-				name: "Coffee 1",
-				price: 10.0,
-				image: "https://www.royalcupcoffee.com/sites/default/files/images/blog/AdobeStock_159183621update.jpg",
-				description:
-					"Product Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-			},
-			{
-				id: 2,
-				name: "Coffee 2",
-				price: 20.0,
-				image: "https://www.royalcupcoffee.com/sites/default/files/images/blog/AdobeStock_159183621update.jpg",
-				description:
-					"Product Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-			},
-		],
-	},
-	{
-		category_id: 2,
-		category_name: "Coffee 2",
-		items: [
-			{
-				id: 3,
-				name: "Coffee 3",
-				price: 30.0,
-				image: "https://www.royalcupcoffee.com/sites/default/files/images/blog/AdobeStock_159183621update.jpg",
-				description:
-					"Product Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-			},
-			{
-				id: 4,
-				name: "Coffee 4",
-				price: 40.0,
-				image: "https://www.royalcupcoffee.com/sites/default/files/images/blog/AdobeStock_159183621update.jpg",
-				description:
-					"Product Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-			},
-			{
-				id: 5,
-				name: "Coffee 5",
-				price: 50.0,
-				image: "https://www.royalcupcoffee.com/sites/default/files/images/blog/AdobeStock_159183621update.jpg",
-				description:
-					"Product Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-			},
-		],
-	},
-];
-
 const BACKEND_URL = import.meta.env.REACT_APP_IMAGE;
 
 type Category = {
