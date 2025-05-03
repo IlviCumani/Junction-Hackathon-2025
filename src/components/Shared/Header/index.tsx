@@ -17,7 +17,7 @@ type HeaderProps = {
 const Navbar = ({ navLinks = [] }: HeaderProps) => {
 	const navigate = useNavigate();
 	const { cartItems, updateQuantity } = useCartContext();
-	const { isAuthenticated } = useAuthContext();
+	const { isAuthenticated, user } = useAuthContext();
 	const cartItemsCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
 	return (
@@ -121,8 +121,7 @@ const Navbar = ({ navLinks = [] }: HeaderProps) => {
 						</Button>
 					) : (
 						<Avatar className="size-8">
-							<AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-							<AvatarFallback>CN</AvatarFallback>
+							<AvatarFallback>{`${user?.first_name[0]}${user?.last_email[0]}`}</AvatarFallback>
 						</Avatar>
 					)}
 

@@ -29,12 +29,21 @@ const DeliveryRoute = new ProjectRoutes({
 	routeName: "Delivery",
 	routePath: "delivery",
 	routeElement: <CustomerPages.Delivery />,
+	needsAuthentication: true,
+});
+
+const ProfileRoute = new ProjectRoutes({
+	routeName: "Profile",
+	routePath: "profile",
+	needsAuthentication: true,
+	routeElement: <CustomerPages.Delivery />,
 });
 
 function appendSubRoutes(): void {
 	CustomerRoot.addChildrenRoute(HomeRoute);
 	CustomerRoot.addChildrenRoute(MenuRoute);
 	CustomerRoot.addChildrenRoute(DeliveryRoute);
+	CustomerRoot.addChildrenRoute(ProfileRoute);
 }
 
-export { CustomerRoot, HomeRoute, appendSubRoutes };
+export { CustomerRoot, HomeRoute, DeliveryRoute, MenuRoute, ProfileRoute, appendSubRoutes };
