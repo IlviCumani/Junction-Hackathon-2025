@@ -4,7 +4,7 @@ import StorageManager from "@/models/StorageManager";
 
 type RequestHeaders = Record<string, string>;
 
-const ENDPOINT = "http://172.20.10.3:8000/main/"
+const ENDPOINT = import.meta.env.REACT_APP_ENDPOINT;
 
 console.log("ENDPOINT", ENDPOINT);
 
