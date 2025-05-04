@@ -9,9 +9,7 @@ import { useHttp } from "@/hooks/use-http";
 import { Coffee, Cookie, CupSoda, Nut, Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import ProdCard from "@/pages/Customer/Delivery/components/ProductCard";
 import ProductCard from "@/pages/Customer/Delivery/components/ProductCard";
-import { Separator } from "@/components/ui/separator";
 const BACKEND_URL = import.meta.env.REACT_APP_IMAGE;
 
 const Menu = () => {
@@ -279,7 +277,7 @@ const Menu = () => {
 								category.products.length > 0 && (
 									<div key={category.id} className="mb-16">
 										<div className="grid gap-8 [grid-template-columns:repeat(auto-fit,minmax(20rem,1fr))]">
-											{category.products.map((item: any) => (
+											{category.products.map((item: any, index: number) => (
 												<ProductCard
 													key={item.id}
 													id={item.id}
@@ -287,6 +285,7 @@ const Menu = () => {
 													description={item.description}
 													image={`${BACKEND_URL}${item.image}`}
 													price={item.base_price}
+													isPopular={index % 2 === 1}
 													onBtnClick={() => {
 														setOrder((prev: any) => {
 															const existingIndex =

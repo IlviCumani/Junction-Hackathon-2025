@@ -1,7 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import StorageManager from "@/models/StorageManager";
-import { useHttp } from "@/hooks/use-http";
 import { decode } from "jwt-js-decode";
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
+import { Cake } from "lucide-react";
 
 type User = {
 	// token_type: string;
@@ -35,7 +37,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		}
 	}, []);
 
-	const login = (token: { access: string }) => {
+	useEffect(() => {
+		if (user) {
+			const today = new Date();
+			const userBirthday = new Date(user.birthday);
+			const isUsersBirthday =
+				today.getDate() === userBirthday.getDate() &&
+				today.getMonth() === userBirthday.getMonth();
+
+			if (isUsersBirthday) {
+				console.log("Happy Birthday!");
+				toast(`Happy Birthday, ${user.first_name}!`, {
+					duration: 2000,
+					description: "We wish you a wonderful day!",
+					icon: <Cake />,
+					position: "top-right",
+					// action: {
+					// 	altText: "Close",
+					// 	onClick: () => toast.dismiss(),
+					// },
+				});
+			}
+		}
+	}, [user]);
+
+	const login = (token: { access: string }): string => {
 		const user = decode(token.access);
 		const payload = {
 			user_id: user.payload.user_id,
@@ -48,6 +74,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		setUser(payload);
 		setIsAuthenticated(true);
 		StorageManager.setItem("authToken", token.access);
+
+		return payload.group as string;
 	};
 
 	const logout = () => {
@@ -56,11 +84,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		StorageManager.removeItem("authToken");
 	};
 
-	console.log(user);
-	console.log(isAuthenticated);
 	return (
 		<AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
 			{children}
+			<Toaster />
 		</AuthContext.Provider>
 	);
 }

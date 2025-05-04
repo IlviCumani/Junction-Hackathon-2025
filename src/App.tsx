@@ -28,7 +28,7 @@ function iterateRoutes(root: ProjectRoutes): RouteObject {
 	};
 }
 
-// console.log(Root.getSubRoutes());
+console.log(Root.getSubRoutes());
 
 function App() {
 	const routes = [iterateRoutes(Root)];

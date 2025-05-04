@@ -21,7 +21,9 @@ export default function LoginPage() {
 
 	function handleSubmit(values: { email: string; password: string }) {
 		sendRequest(useHttp.POST("login/", values), (response: any) => {
-			login(response);
+			const type = login(response);
+			console.log(type);
+
 			navigate("/");
 		});
 	}

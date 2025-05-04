@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Coffee, ShoppingCart } from "lucide-react";
 import { useCartContext } from "@/context/CartContext";
+import { Badge } from "@/components/ui/badge";
 
 type ProductCardProps = {
 	id: number;
@@ -11,6 +12,7 @@ type ProductCardProps = {
 	price?: number;
 	stock?: number;
 	onBtnClick?: any;
+	isPopular: boolean;
 };
 
 export default function ProductCard({
@@ -20,16 +22,24 @@ export default function ProductCard({
 	price = 10.0,
 	id,
 	onBtnClick,
+	isPopular = false,
 }: // stock = 10,
 ProductCardProps) {
 	const { addToCart } = useCartContext();
 	return (
-		<Card className="shadow-none ">
+		<Card className="shadow-none relative">
+			{isPopular && (
+				<Badge className="absolute top-4 right-2 bg-green-600/10 dark:bg-green-600/20 hover:bg-green-600/10 text-green-500 border-green-600/60 shadow-none">
+					Popular
+				</Badge>
+			)}
 			<CardHeader className="pt-4 pb-4 px-5 flex-row items-center gap-3 font-semibold">
-				<div className="h-8 w-8 flex items-center justify-center bg-primary text-primary-foreground rounded-full">
-					<Coffee className="h-5 w-5" />
+				<div>
+					<div className="h-8 w-8 flex items-center justify-center bg-primary text-primary-foreground rounded-full">
+						<Coffee className="h-5 w-5" />
+					</div>
+					{title}
 				</div>
-				{title}
 			</CardHeader>
 			<CardContent className="text-[15px] text-muted-foreground px-5 ">
 				<p>{description}</p>
