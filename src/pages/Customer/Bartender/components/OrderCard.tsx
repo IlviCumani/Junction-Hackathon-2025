@@ -53,7 +53,7 @@ export default function OrderCard({ order }: OrderCardProps) {
 					<div key={index} className="flex flex-col gap-3 border rounded-xl p-4">
 						<div className="flex gap-4 items-center">
 							<img
-								src={item.product.image}
+								src={"http://172.20.10.3:8000/"+item.product.image}
 								alt={item.product.name}
 								className="w-20 h-20 rounded-lg object-cover"
 							/>

@@ -17,6 +17,7 @@ type OrderItem = {
 	total_price: number;
 	product: {
 		name: string;
+		image: string;
 	};
 	order_options?: OrderOption[];
 };
@@ -63,9 +64,7 @@ export default function Delivery() {
 								order_items: order.order_items.map((item) => ({
 									...item,
 									product: {
-										...item.product,
-										image: "https://via.placeholder.com/80", // Placeholder image
-									},
+										...item.product									},
 								})),
 							}}
 						/>
