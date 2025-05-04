@@ -9,8 +9,29 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Star } from "lucide-react";
+import { useHttp } from "@/hooks/use-http";
+import { useEffect, useState } from "react";
+import { Loader } from "@/components/Shared/Loader";
+
+
+
+type User = {
+	loyalty_points: number;
+};
 
 export default function LoyaltyCard({}) {
+	const { isLoading, sendRequest } = useHttp();
+	const [user, setUser] = useState<User | null>(null);
+
+	useEffect(() => {
+		sendRequest(useHttp.GET("user/profile"), (response: User) => setUser(response));
+	}, []);
+
+	
+	if (isLoading || !user) {
+		return <Loader className="h-screen" />;
+	}
+
 	return (
 		<Card>
 			<CardHeader>
@@ -29,9 +50,9 @@ export default function LoyaltyCard({}) {
 				<div className="flex flex-col gap-2">
 					<span>Your Points</span>
 					<div className="flex items-center gap-2">
-						<Progress value={50} className="h-2" />
+						<Progress value={user.loyalty_points} className="h-2" />
 						<span className="text-muted-foreground">
-							<span className="text-2xl text-foreground">50</span>
+							<span className="text-2xl text-foreground">{user.loyalty_points}</span>
 							/300
 						</span>
 					</div>
