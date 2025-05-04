@@ -13,8 +13,6 @@ import { useHttp } from "@/hooks/use-http";
 import { useEffect, useState } from "react";
 import { Loader } from "@/components/Shared/Loader";
 
-
-
 type User = {
 	loyalty_points: number;
 };
@@ -27,7 +25,6 @@ export default function LoyaltyCard({}) {
 		sendRequest(useHttp.GET("user/profile"), (response: User) => setUser(response));
 	}, []);
 
-	
 	if (isLoading || !user) {
 		return <Loader className="h-screen" />;
 	}
@@ -53,7 +50,7 @@ export default function LoyaltyCard({}) {
 						<Progress value={user.loyalty_points} className="h-2" />
 						<span className="text-muted-foreground">
 							<span className="text-2xl text-foreground">{user.loyalty_points}</span>
-							/300
+							/100
 						</span>
 					</div>
 				</div>

@@ -46,8 +46,6 @@ const Menu = () => {
 		});
 	}, []);
 
-	console.log(order);
-
 	const coffeeDose = watch("coffee_dose");
 	const milkDose = watch("milk_dose");
 
@@ -103,6 +101,11 @@ const Menu = () => {
 				normal_orders: mappedNormalOrder,
 			}),
 		);
+
+		setOrder({
+			custom_orders: [],
+			normal_orders: [],
+		});
 	}
 
 	return (
