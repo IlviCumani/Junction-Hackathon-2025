@@ -1,6 +1,10 @@
+import { useHttp } from "@/hooks/use-http";
+import { useCallback } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Coffee } from "lucide-react";
+
+const BACKEND_URL = import.meta.env.REACT_APP_IMAGE;
 
 type OrderOption = {
 	ammount: number;
@@ -29,9 +33,24 @@ type Order = {
 
 type OrderCardProps = {
 	order: Order;
+	refetchOrders: () => void;
 };
 
-export default function OrderCard({ order }: OrderCardProps) {
+export default function OrderCard({ order, refetchOrders }: OrderCardProps) {
+	const { sendRequest } = useHttp();
+
+	const handleCompleteOrder = useCallback(() => {
+		sendRequest(
+			useHttp.POST("order/complete/", { order_id: order.order_id }),
+			() => {
+				refetchOrders(); // Refetch orders on success
+			},
+			() => {
+				console.error("Failed to complete order");
+			}
+		);
+	}, [order.order_id, refetchOrders, sendRequest]);
+
 	return (
 		<Card className="mb-6 shadow-md w-80 flex flex-col">
 			<CardHeader className="pt-4 pb-2 px-5 font-semibold text-lg">
@@ -53,7 +72,7 @@ export default function OrderCard({ order }: OrderCardProps) {
 					<div key={index} className="flex flex-col gap-3 border rounded-xl p-4">
 						<div className="flex gap-4 items-center">
 							<img
-								src={item.product.image}
+								src={`${BACKEND_URL}${item.product.image}`}
 								alt={item.product.name}
 								className="w-20 h-20 rounded-lg object-cover"
 							/>
@@ -84,7 +103,9 @@ export default function OrderCard({ order }: OrderCardProps) {
 
 			<CardFooter className="flex justify-between items-center px-5 pt-2 pb-4">
 				<p className="text-lg font-semibold">Total: ${order.total_price}</p>
-				<Button className="text-sm">Finish Order</Button>
+				<Button className="text-sm" onClick={handleCompleteOrder}>
+					Finish Order
+				</Button>
 			</CardFooter>
 		</Card>
 	);
