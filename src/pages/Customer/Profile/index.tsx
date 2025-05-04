@@ -60,7 +60,9 @@ export default function Profile() {
 	useEffect(() => {
 		sendRequest(useHttp.GET("user/profile"), (response: User) => setUser(response));
 		sendRequest(useHttp.GET("user/orders"), (response: OrderType[]) => setOrders(response));
-		sendRequest(useHttp.GET("user/giftcards"), (response: GiftCardType[]) => setGiftCards(response));
+		sendRequest(useHttp.GET("user/giftcards"), (response: GiftCardType[]) =>
+			setGiftCards(response),
+		);
 	}, []);
 
 	if (isLoading || !user) {
@@ -99,9 +101,7 @@ export default function Profile() {
 			{/* Loyalty Points Section */}
 			<section className="border rounded-lg p-6">
 				<h2 className="text-xl font-semibold mb-2">Loyalty Points</h2>
-				<p className="text-muted-foreground font-semibold text-xl">
-					{user.loyalty_points}
-				</p>
+				<p className="text-muted-foreground font-semibold text-xl">{user.loyalty_points}</p>
 				<Button onClick={() => navigate("/loyalty")}>Go to Loyalty Page</Button>
 			</section>
 
@@ -128,7 +128,9 @@ export default function Profile() {
 					{giftCards.length === 0 ? (
 						<p className="text-muted-foreground">No gift cards available.</p>
 					) : (
-						giftCards.map((giftCard) => <GiftCard key={giftCard.id} giftCard={giftCard} />)
+						giftCards.map((giftCard) => (
+							<GiftCard key={giftCard.id} giftCard={giftCard} />
+						))
 					)}
 				</div>
 			</section>
