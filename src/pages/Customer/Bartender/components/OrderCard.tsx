@@ -1,4 +1,5 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Coffee } from "lucide-react";
 
 type OrderOption = {
@@ -32,7 +33,7 @@ type OrderCardProps = {
 
 export default function OrderCard({ order }: OrderCardProps) {
 	return (
-		<Card className="mb-6 shadow-md">
+		<Card className="mb-6 shadow-md w-80 flex flex-col">
 			<CardHeader className="pt-4 pb-2 px-5 font-semibold text-lg">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-3">
@@ -47,7 +48,7 @@ export default function OrderCard({ order }: OrderCardProps) {
 				</div>
 			</CardHeader>
 
-			<CardContent className="space-y-4 px-5">
+			<CardContent className="flex-1 space-y-4 px-5">
 				{order.order_items.map((item, index) => (
 					<div key={index} className="flex flex-col gap-3 border rounded-xl p-4">
 						<div className="flex gap-4 items-center">
@@ -81,8 +82,9 @@ export default function OrderCard({ order }: OrderCardProps) {
 				))}
 			</CardContent>
 
-			<CardFooter className="flex justify-end px-5 pt-2 pb-4">
+			<CardFooter className="flex justify-between items-center px-5 pt-2 pb-4">
 				<p className="text-lg font-semibold">Total: ${order.total_price}</p>
+				<Button className="text-sm">Finish Order</Button>
 			</CardFooter>
 		</Card>
 	);
