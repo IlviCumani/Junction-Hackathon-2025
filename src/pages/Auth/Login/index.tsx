@@ -21,9 +21,17 @@ export default function LoginPage() {
 
 	function handleSubmit(values: { email: string; password: string }) {
 		sendRequest(useHttp.POST("login/", values), (response: any) => {
-			const type = login(response);
+			const type: any = login(response);
 			console.log(type);
 
+			if (type === "Admin") {
+				window.location.href = "https://preview--java-bean-admin-panel.lovable.app/";
+				return;
+			}
+			if (type === "Bartender") {
+				navigate("/staff");
+				return;
+			}
 			navigate("/");
 		});
 	}
