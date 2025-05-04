@@ -9,6 +9,7 @@ const CustomerPages = {
 	Gift: lazy(() => import("./Gift")),
 	Loyalty: lazy(() => import("./Loyalty")),
 	Profile: lazy(() => import("./Profile")),
+	Bartender: lazy(() => import("./Bartender")),
 };
 
 const CustomerRoot = new ProjectRoutes({
@@ -54,6 +55,13 @@ const ProfileRoute = new ProjectRoutes({
 	routeElement: <CustomerPages.Profile />,
 });
 
+const BartenderRoute = new ProjectRoutes({
+	routeName: "Bartender",
+	routePath: "bartender",
+	routeElement: <CustomerPages.Bartender />,
+	needsAuthentication: false,
+});
+
 function appendSubRoutes(): void {
 	CustomerRoot.addChildrenRoute(HomeRoute);
 	CustomerRoot.addChildrenRoute(MenuRoute);
@@ -61,6 +69,7 @@ function appendSubRoutes(): void {
 	CustomerRoot.addChildrenRoute(LoyaltyRoute);
 	CustomerRoot.addChildrenRoute(DeliveryRoute);
 	CustomerRoot.addChildrenRoute(ProfileRoute);
+	CustomerRoot.addChildrenRoute(BartenderRoute);
 }
 
 export { CustomerRoot, HomeRoute, DeliveryRoute, MenuRoute, ProfileRoute, appendSubRoutes };
