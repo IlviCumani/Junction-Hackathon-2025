@@ -1,144 +1,173 @@
 import { useState } from "react";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-
-interface GiftCard {
-  recipientEmail: string;
-  amount: number;
-  message?: string;
-}
+import { useHttp } from "@/hooks/use-http";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { Loader2 } from "lucide-react";
 
 const giftCardAmounts = [10, 25, 50, 100];
 
 const GiftCardForm = () => {
-  const [recipientEmail, setRecipientEmail] = useState("");
-  const [amount, setAmount] = useState<number>(25);
-  const [message, setMessage] = useState("");
-  const [cart, setCart] = useState<GiftCard[]>([]);
+	const [email, setEmail] = useState("");
+	const [total_ammount, setTotalAmmount] = useState<number>(25);
+	const [message, setMessage] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [emailTouched, setEmailTouched] = useState(false);
 
-  const handleAddToCart = (e: React.FormEvent) => {
-    e.preventDefault();
+	const { sendRequest } = useHttp();
 
-    if (!recipientEmail || !amount) {
-      toast.error("Please fill out all required fields");
-      return;
-    }
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		setEmailTouched(true);
 
-    const newGiftCard: GiftCard = {
-      recipientEmail,
-      amount,
-      message,
-    };
+		if (!email || !total_ammount) {
+			toast.error("Please fill out all required fields");
+			return;
+		}
 
-    setCart((prev) => [...prev, newGiftCard]);
+		setIsSubmitting(true);
 
-    toast.success(`Gift card for ${recipientEmail} added to cart`);
+		const giftCardData = { email, total_ammount, message };
 
-    setRecipientEmail("");
-    setAmount(25);
-    setMessage("");
-  };
+		sendRequest(
+			useHttp.POST("giftcards/", giftCardData),
+			() => {
+				toast.success(`Gift card for ${email} sent successfully!`);
+				setEmail("");
+				setTotalAmmount(25);
+				setMessage("");
+				setIsSubmitting(false);
+				setEmailTouched(false);
+			},
+			() => {
+				toast.error("Something went wrong. Please try again.");
+				setIsSubmitting(false);
+			},
+		);
+	};
 
-  return (
-    <div className="flex justify-center py-10 px-4">
-      <Card className="w-full max-w-md shadow-md">
-        <CardHeader>
-          <CardTitle className="text-cafe-brown text-xl text-center">
-            Customize a Gift Card
-          </CardTitle>
-          <CardDescription className="text-center">
-            Fill the form and add it to your cart
-          </CardDescription>
-        </CardHeader>
+	const isEmailInvalid = emailTouched && !email;
 
-        <form onSubmit={handleAddToCart}>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="recipientEmail">Recipient Email</Label>
-              <Input
-                id="recipientEmail"
-                type="email"
-                placeholder="Enter recipient's email"
-                value={recipientEmail}
-                onChange={(e) => setRecipientEmail(e.target.value)}
-                required
-              />
-            </div>
+	return (
+		<motion.div
+			initial={{ opacity: 0, y: 40 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.5 }}
+			className="flex justify-center py-16 px-6"
+		>
+			<motion.div whileHover={{ scale: 1.01 }} className="w-full max-w-lg transition-all">
+				<Card className="relative border-4 border-green-500 shadow-xl rounded-2xl p-4 transition-all duration-500 hover:scale-[1.02]">
+					<CardHeader>
+						<CardTitle className="text-green-500 text-2xl text-center font-semibold">
+							Send a Gift Card
+						</CardTitle>
+						<CardDescription className="text-muted-foreground text-center">
+							Enter recipient details and personalize your message 🎁
+						</CardDescription>
+					</CardHeader>
 
-            <div className="space-y-2">
-              <Label htmlFor="amount">Gift Card Amount</Label>
-              <Select
-                onValueChange={(value) => setAmount(Number(value))}
-                defaultValue={amount.toString()}
-              >
-                <SelectTrigger id="amount">
-                  <SelectValue placeholder="Select amount" />
-                </SelectTrigger>
-                <SelectContent>
-                  {giftCardAmounts.map((value) => (
-                    <SelectItem key={value} value={value.toString()}>
-                      ${value}.00
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+					<form onSubmit={handleSubmit}>
+						<CardContent className="space-y-5">
+							{/* Email */}
+							<div className="space-y-1.5">
+								<Label htmlFor="email">Recipient Email</Label>
+								<Input
+									id="email"
+									type="email"
+									placeholder="example@email.com"
+									value={email}
+									onBlur={() => setEmailTouched(true)}
+									onChange={(e) => setEmail(e.target.value)}
+									className={cn(
+										"transition-all focus:ring-2 focus:ring-cafe-brown h-12 text-lg",
+										isEmailInvalid && "border-red-500",
+									)}
+									required
+								/>
+								{isEmailInvalid && (
+									<p className="text-xs text-red-500">Email is required</p>
+								)}
+							</div>
 
-            <div className="space-y-2">
-              <Label htmlFor="message">Personal Message (Optional)</Label>
-              <Textarea
-                id="message"
-                placeholder="Add a personal message..."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                rows={3}
-              />
-            </div>
-          </CardContent>
+							{/* Amount */}
+							<div className="space-y-1.5">
+								<Label htmlFor="total_ammount">Gift Card Amount</Label>
+								<Select
+									onValueChange={(value) => setTotalAmmount(Number(value))}
+									defaultValue={total_ammount.toString()}
+								>
+									<SelectTrigger id="total_ammount">
+										<SelectValue placeholder="Select amount" />
+									</SelectTrigger>
+									<SelectContent>
+										{giftCardAmounts.map((value) => (
+											<SelectItem key={value} value={value.toString()}>
+												${value}.00
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</div>
 
-          <CardFooter>
-            <Button
-              type="submit"
-              className="w-full bg-cafe-brown hover:bg-cafe-lightBrown text-white"
-            >
-              Add to Cart
-            </Button>
-          </CardFooter>
-        </form>
+							{/* Message */}
+							<div className="space-y-1.5">
+								<Label htmlFor="message">
+									Personal Message{" "}
+									<span className="text-muted-foreground">(Optional)</span>
+								</Label>
+								<Textarea
+									id="message"
+									placeholder="Add a personal note..."
+									value={message}
+									onChange={(e) => setMessage(e.target.value)}
+									rows={4}
+									className="resize-none focus:ring-2 focus:ring-cafe-brown transition-all text-base p-4"
+								/>
+							</div>
+						</CardContent>
 
-        {cart.length > 0 && (
-          <div className="px-6 pb-4 border-t mt-4">
-            <h4 className="font-semibold mb-2">Cart:</h4>
-            <ul className="space-y-1 text-sm">
-              {cart.map((item, index) => (
-                <li key={index}>
-                  🎁 {item.recipientEmail} – ${item.amount}.00
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </Card>
-    </div>
-  );
+						<CardFooter>
+							<motion.div whileTap={{ scale: 0.97 }} className="w-full">
+								<Button
+									type="submit"
+									className="w-full h-14 text-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all rounded-xl"
+									disabled={isSubmitting}
+								>
+									{isSubmitting ? (
+										<>
+											<Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+											Sending...
+										</>
+									) : (
+										"Send Gift Card"
+									)}
+								</Button>
+							</motion.div>
+						</CardFooter>
+					</form>
+				</Card>
+			</motion.div>
+		</motion.div>
+	);
 };
 
 export default GiftCardForm;
