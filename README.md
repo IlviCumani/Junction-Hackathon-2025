@@ -1,1 +1,1 @@
-# IlviCumani-Junction-Hackathon-2025
+# Junction-Hackathon-2025
